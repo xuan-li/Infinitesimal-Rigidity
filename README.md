@@ -1,5 +1,5 @@
 # Infinitesimal-Rigidity
-A software which can decide whether a polyhedron is infinitesimally rigid.
+A software which can decide whether a polyhedron is infinitesimally rigid. It's the project for my B.S. degree.
 
 The algorithm is based on a theorem in [1].
 
