@@ -33,9 +33,11 @@ IF (OPENVOLUMEMESH_INCLUDE_DIR)
     SET(OPENVOLUMEMESH_FIND_QUIETLY TRUE)
 ENDIF (OPENVOLUMEMESH_INCLUDE_DIR)
 
-FIND_PATH(OPENVOLUMEMESH_INCLUDE_DIR OpenVolumeMesh/Mesh/TetrahedralMesh.hh
-        env OpenVolumeMesh_DIR/include
-        PATHS /usr/local/include
+FIND_PATH(OPENVOLUMEMESH_INCLUDE_DIR
+        NAMES OpenVolumeMesh/Mesh/TetrahedralMesh.hh
+        PATHS
+        $ENV{OpenVolumeMesh_DIR}/include
+        /usr/local/include
         /usr/include
         /usr/local/OpenVolumeMesh/include
         /ACG/acgdev/gcc-4.0-x86_64/OVM/OpenVolumeMesh/installed/include
