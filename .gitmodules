@@ -1,0 +1,9 @@
+[submodule "external/libigl"]
+	path = external/libigl
+	url = https://github.com/libigl/libigl.git
+[submodule "external/libhedra"]
+	path = external/libhedra
+	url = https://github.com/avaxman/libhedra.git
+[submodule "external/polypartition"]
+	path = external/polypartition
+	url = https://github.com/ivanfratric/polypartition.git
