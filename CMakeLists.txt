@@ -7,16 +7,13 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/cmake" CAC
 include_directories(${CMAKE_SOURCE_DIR}/external/libigl/external/eigen external/libhedra/include)
 
 ########### libigl ##########
-#include_directories(${CMAKE_SOURCE_DIR}/external/libigl/include)
-#message(${CMAKE_SOURCE_DIR}/external/libigl/include)
+
 set(LIBIGL_ROOT ${CMAKE_SOURCE_DIR}/external/libigl)
 option(LIBIGL_WITH_OPENGL            "Use OpenGL"         ON)
 option(LIBIGL_WITH_OPENGL_GLFW       "Use GLFW"           ON)
 option(LIBIGL_WITH_OPENGL_GLFW_IMGUI "Use ImGui"          ON)
 option(LIBIGL_WITH_PNG               "Use PNG"            ON)
-option(LIBIGL_WITH_TETGEN  "Use TetGen"  ON)
-#include_directories(external/libigl/external/glad/include)
-#include_directories(external/libigl/external/glfw/include)
+option(LIBIGL_WITH_TETGEN            "Use TetGen"         ON)
 
 find_package(LIBIGL REQUIRED)
 
