@@ -12,7 +12,7 @@
 Rigidity::Controller controller;
 
 
-void UpdateMeshData(igl::viewer::Viewer &viewer);
+void UpdateMeshData(igl::opengl::glfw::Viewer &viewer);
 
 void LoadMeshFromFile() {
 	std::string fname = igl::file_dialog_open();
@@ -21,7 +21,7 @@ void LoadMeshFromFile() {
 	size_t last_dot = fname.rfind('.');
 	if (last_dot == std::string::npos)
 	{
-		printf("Error: No file extension found in %s\n", fname);
+		printf("Error: No file extension found in %s\n", fname.c_str());
 		return;
 	}
 
@@ -34,7 +34,7 @@ void LoadMeshFromFile() {
 	}
 }
 
-void DrawMotion(igl::viewer::Viewer &viewer) {
+void DrawMotion(igl::opengl::glfw::Viewer &viewer) {
 
 	double span = V.col(0).maxCoeff() - V.col(0).minCoeff();
 
@@ -69,19 +69,18 @@ void DrawMotion(igl::viewer::Viewer &viewer) {
 		span * 0.01,
 		lineColors,
 		50,
-		false,
 		lineV,
 		lineT,
 		lineTC);
 	Merge::MergeMeshMatrix(bigV, bigT, bigTC, lineV, lineT, lineTC, bigV, bigT, bigTC);
 
-	viewer.data.clear();
-	viewer.data.set_mesh(bigV, bigT);
-	viewer.data.set_colors(bigTC);
+	viewer.data().clear();
+	viewer.data().set_mesh(bigV, bigT);
+	viewer.data().set_colors(bigTC);
 
 }
 
-void UpdateMeshData(igl::viewer::Viewer &viewer) {
+void UpdateMeshData(igl::opengl::glfw::Viewer &viewer) {
 	
 	if (ShowMesh == surface) {
 		SurfaceToMatrix(controller.SurfaceMesh(), V, D, F);

@@ -19,8 +19,8 @@ namespace Rigidity {
 	protected:
 		void ClearMotions();
 		void ComputeMotion(Eigen::VectorXd solution);
-		void ConstructLinearSystem(Eigen::VectorXd solution, Eigen::MatrixXd &A, Eigen::VectorXd &b);
-		void ConstructLinearSystem(std::vector<Volume::VertexHandle> &vert_pair, Eigen::VectorXd &solution, Eigen::MatrixXd & A, Eigen::VectorXd & b);
+        void ConstructLinearSystem(std::vector<Volume::VertexHandle> vert_pair, Eigen::VectorXd &solution, Eigen::MatrixXd & A, Eigen::VectorXd & b);
+        void ConstructLinearSystem(Eigen::VectorXd solution, Eigen::MatrixXd &A, Eigen::VectorXd &b);
 		void WriteToVertices(Eigen::VectorXd motion);
 		void CheckMotions();
 	
@@ -78,6 +78,29 @@ namespace Rigidity {
 		WriteToVertices(motion);
 	}
 
+    inline void MotionSolver::ConstructLinearSystem(std::vector<Volume::VertexHandle> vert_pair, Eigen::VectorXd &solution, Eigen::MatrixXd & A, Eigen::VectorXd & b)
+    {
+        using namespace Volume;
+        HalfEdgeHandle he = m_volume->halfedge(vert_pair[0], vert_pair[1]);
+        EdgeHandle e = m_volume->edge_handle(he);
+        if (touched[e]) return;
+        else touched[e] = true;
+        double dl;
+        if (m_volume->IsVariable(e))
+            dl = solution(m_volume->VariableIndex(e));
+        else
+            dl = 0;
+
+        Vec3d dpoint = m_volume->vertex(vert_pair[1]) - m_volume->vertex(vert_pair[0]);
+        dpoint = dpoint / dpoint.norm();
+
+        b(e.idx()) = dl;
+
+        for (int i = 0; i < 3; i++) {
+            A(e.idx(), 3 * vert_pair[1].idx() + i) = dpoint[i];
+            A(e.idx(), 3 * vert_pair[0].idx() + i) = -dpoint[i];
+        }
+    }
 
 	inline void MotionSolver::ConstructLinearSystem(Eigen::VectorXd solution, Eigen::MatrixXd & A, Eigen::VectorXd & b)
 	{
@@ -167,12 +190,12 @@ namespace Rigidity {
 		for (CellIter citer = m_volume->cells_begin(); citer != m_volume->cells_end(); ++citer) {
 			CellHandle c = *citer;
 			auto verts = m_volume->CellVertices(c);
-			ConstructLinearSystem(std::vector<VertexHandle>({ verts[0], verts[1] }), solution, A, b);
-			ConstructLinearSystem(std::vector<VertexHandle>({ verts[0], verts[2] }), solution, A, b);
-			ConstructLinearSystem(std::vector<VertexHandle>({ verts[0], verts[3] }), solution, A, b);
-			ConstructLinearSystem(std::vector<VertexHandle>({ verts[1], verts[2] }), solution, A, b);
-			ConstructLinearSystem(std::vector<VertexHandle>({ verts[1], verts[3] }), solution, A, b);
-			ConstructLinearSystem(std::vector<VertexHandle>({ verts[2], verts[3] }), solution, A, b);
+			ConstructLinearSystem({ verts[0], verts[1] }, solution, A, b);
+			ConstructLinearSystem({ verts[0], verts[2] }, solution, A, b);
+			ConstructLinearSystem({ verts[0], verts[3] }, solution, A, b);
+			ConstructLinearSystem({ verts[1], verts[2] }, solution, A, b);
+			ConstructLinearSystem({ verts[1], verts[3] }, solution, A, b);
+			ConstructLinearSystem({ verts[2], verts[3] }, solution, A, b);
 		}
 
 		//std::cout << std::endl << A << std::endl;
@@ -180,29 +203,7 @@ namespace Rigidity {
 
 	}
 
-	inline void MotionSolver::ConstructLinearSystem(std::vector<Volume::VertexHandle> &vert_pair, Eigen::VectorXd &solution, Eigen::MatrixXd & A, Eigen::VectorXd & b)
-	{
-		using namespace Volume;
-		HalfEdgeHandle he = m_volume->halfedge(vert_pair[0], vert_pair[1]);
-		EdgeHandle e = m_volume->edge_handle(he);
-		if (touched[e]) return;
-		else touched[e] = true;
-		double dl;
-		if (m_volume->IsVariable(e))
-			dl = solution(m_volume->VariableIndex(e));
-		else
-			dl = 0;
 
-		Vec3d dpoint = m_volume->vertex(vert_pair[1]) - m_volume->vertex(vert_pair[0]);
-		dpoint = dpoint / dpoint.norm();
-		
-		b(e.idx()) = dl;
-		
-		for (int i = 0; i < 3; i++) {
-			A(e.idx(), 3 * vert_pair[1].idx() + i) = dpoint[i];
-			A(e.idx(), 3 * vert_pair[0].idx() + i) = -dpoint[i];
-		}
-	}
 
 	inline void MotionSolver::WriteToVertices(Eigen::VectorXd motion)
 	{

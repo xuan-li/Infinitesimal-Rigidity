@@ -7,7 +7,7 @@
 #include "Controller.h"
 
 // This function is called every time a keyboard button is pressed
-bool key_down(igl::viewer::Viewer& viewer, unsigned char key, int modifier)
+bool key_down(igl::opengl::glfw::Viewer& viewer, unsigned char key, int modifier)
 {
 	if (ShowMesh == volume) {
 		UpdateMeshView(viewer, key);

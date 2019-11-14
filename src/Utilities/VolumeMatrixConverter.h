@@ -1,8 +1,8 @@
 #ifndef _VOLUMEMATRIXCONVERTER
 #define _VOLUMEMATRIXCONVERTER
 
-#include "Eigen\Dense"
-#include "MeshVolume\OpenVolumeHeader.h"
+#include "Eigen/Dense"
+#include "MeshVolume/OpenVolumeHeader.h"
 #include <vector>
 #include <map>
 #include <algorithm>

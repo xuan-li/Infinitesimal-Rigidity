@@ -5,21 +5,21 @@
 enum ShowOption {surface, triangulated_surface, volume};
 
 
-ShowOption ShowMesh = surface;
+static ShowOption ShowMesh = surface;
 
-bool ShowPolygonalEdges = true;
-bool ShowVertexSpheres = false;
+static bool ShowPolygonalEdges = true;
+static bool ShowVertexSpheres = false;
 
 
 // only available wehn ShowGraph is true;
-bool ShowEdgeColor = false;
-bool FillGraphFace = true;
-bool ShowVertexColor = false;
+static bool ShowEdgeColor = false;
+static bool FillGraphFace = true;
+static bool ShowVertexColor = false;
 
-bool ShowMotion = false;
-int motion_mode = 0;
+static bool ShowMotion = false;
+static int motion_mode = 0;
 
-char TetMode = '5';
+static char TetMode = '5';
 
 
 #endif // !_VIEWER_FLAGS

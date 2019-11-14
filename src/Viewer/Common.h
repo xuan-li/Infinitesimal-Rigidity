@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <igl/opengl/glfw/Viewer.h>
+#include <igl/opengl/glfw/imgui/ImGuiMenu.h>
+#include <igl/opengl/glfw/imgui/ImGuiHelpers.h>
 #include <hedra/triangulate_mesh.h>
 #include <hedra/polygonal_edge_topology.h>
 #include <hedra/polyhedral_face_normals.h>

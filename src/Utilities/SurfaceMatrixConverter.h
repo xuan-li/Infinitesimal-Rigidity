@@ -1,24 +1,24 @@
 #ifndef _SURFACEMATRIXCONVERTER
 #define _SURFACEMATRIXCONVERTER
 
-#include "Eigen\Dense"
+#include "Eigen/Dense"
 
 template <class Mesh> 
 void SurfaceToMatrix(Mesh &mesh, Eigen::MatrixXd &V, Eigen::MatrixXi &F) 
 {
 	V.resize(mesh.n_vertices(), 3);
 	F.resize(mesh.n_faces(), 3);
-	for (Mesh::VertexIter viter = mesh.vertices_begin(); viter != mesh.vertices_end(); ++viter) {
+	for (typename Mesh::VertexIter viter = mesh.vertices_begin(); viter != mesh.vertices_end(); ++viter) {
 		auto v = *viter;
 		auto p = mesh.point(v);
 		for (int i = 0; i < 3; i++) {
 			V(v.idx(), i) = p[i];
 		}
 	}
-	for (Mesh::FaceIter fiter = mesh.faces_begin(); fiter != mesh.faces_end(); fiter++) {
+	for (typename Mesh::FaceIter fiter = mesh.faces_begin(); fiter != mesh.faces_end(); fiter++) {
 		auto f = *fiter;
 		int i = 0;
-		for (Mesh::FaceVertexIter fviter = mesh.fv_iter(f); fviter.is_valid(); fviter++) {
+		for (typename Mesh::FaceVertexIter fviter = mesh.fv_iter(f); fviter.is_valid(); fviter++) {
 			auto v = *fviter;
 			F(f.idx(), i) = v.idx();
 			i++;
@@ -36,7 +36,7 @@ void SurfaceToMatrix(Mesh &mesh, Eigen::MatrixXd &V, Eigen::VectorXi &Di, Eigen:
 	V.resize(nv, 3);
 
 	/*load vertex data*/
-	for (Mesh::VertexIter viter = mesh.vertices_begin(); viter != mesh.vertices_end(); ++viter) {
+	for (typename Mesh::VertexIter viter = mesh.vertices_begin(); viter != mesh.vertices_end(); ++viter) {
 		auto v = *viter;
 
 		int idx = v.idx();
