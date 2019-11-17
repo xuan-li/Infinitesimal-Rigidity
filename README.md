@@ -5,7 +5,7 @@ The algorithm is based on a theorem in [1].
 
 This software can visualize the basis of non-trivial infinitesimal motions of polyhedra.
 
-![](images/infinitesimal motion.png)
+![](https://github.com/xuan-li/Infinitesimal-Rigidity/blob/master/images/infinitesimal%20motion.png)
 
 
 ### Reference
