@@ -7,6 +7,11 @@ This software can visualize the basis of non-trivial infinitesimal motions of po
 
 ![](https://github.com/xuan-li/Infinitesimal-Rigidity/blob/master/images/infinitesimal%20motion.png)
 
+## Dependency
+
+- OpenMesh
+- OpenVolumeMesh
+- libigl
 
 ### Reference
 [1] Izmestiev I. Variational properties of the discrete hilbert-einstein functional[J]. Actes des rencontres du CIRM, 2013, 3(1): 151–157.
